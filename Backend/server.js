@@ -25,13 +25,12 @@ app.get("/programs", async (req, res) => {
 app.post("/login", (req, res) => {
     const { username, password, program_id } = req.body;
 
-    // DEV: accept a test user
+   
     if (username === "test" && password === "1234") {
         const token = "fake-jwt-token";
         return res.json({ token, source: "dev-mock" });
     }
 
-    // Otherwise, call real PUC API
     axios.post(`${API_BASE}/Auth/student_login`, req.body)
         .then(response => res.json(response.data))
         .catch(err => res.status(401).json({ message: "PUC login failed", error: err.message }));
